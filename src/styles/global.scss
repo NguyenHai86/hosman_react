@@ -2,13 +2,14 @@
 @import '@fontsource/roboto/400.css';
 @import '@fontsource/roboto/500.css';
 @import '@fontsource/roboto/700.css';
+@import url('https://cdn.staticaly.com/gh/hung1001/font-awesome-pro-v6/44659d9/css/all.min.css');
 
 html {
     font-size: 62.5%;
 }
 body {
     font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 * {
     box-sizing: border-box;
@@ -21,7 +22,6 @@ textarea {
     font-size: 2rem;
     outline: none;
     font-weight: normal;
-    border: none;
 }
 button {
     cursor: pointer;

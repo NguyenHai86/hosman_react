@@ -1,3 +1,15 @@
-export const path = {
-    HOME: '/',
+export const PATH = {
+    MANAGER_MOTEL: '/managermotel',
+    LOGIN: '/login',
+    SIGNUP: '/signup',
+    QLPHONG: '/quanlyphong',
+    QLKHACHTHUE: '/quanlykhachthue',
+    QLHOADDON: '/quanlyhoadon',
+    QLPHIEUCHI: '/quanlyphieuchi',
+    QLLICHXEMPHONG: '/quanlylichxemphong',
+    BAOCAOKHUTRO: '/baocaokhutro',
+    CAIDATKHUTRO: '/caidatkhutro',
+    QLKHU: '/quanlykhu',
+    TONGHOPBAOCAO: '/tonghopbaocao',
+    NOTFOUNDPAGE: '*',
 };

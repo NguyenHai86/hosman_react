@@ -1,7 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import ManagerMotel from './ManagerMotel/ManagerMotel';
+import SignLogin from './SignLogin/SignLogin';
+
 class App extends React.Component {
     render() {
-        return <div></div>;
+        return <>{this.props.user.isLogin ? <ManagerMotel /> : <SignLogin />}</>;
     }
 }
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    };
+};
+export default connect(mapStateToProps, null)(App);

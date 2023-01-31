@@ -1,0 +1,50 @@
+.sign-login {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem 0rem 1rem;
+    &__image {
+        overflow: hidden;
+        border-top-left-radius: 2rem;
+        border-bottom-left-radius: 2rem;
+        width: 100%;
+        height: 100%;
+        background: url(./../../assets/images/motal.jpg) bottom center / cover;
+        position: relative;
+    }
+    &__container {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        position: relative;
+    }
+    &__icon {
+        width: 60%;
+        height: 30%;
+        background-size: cover;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -90%);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+        p {
+            font-weight: 700;
+            color: #45677f;
+            font-size: 3.2rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
+}
+@media screen and (max-width: 1200px) {
+    .sign-login {
+        grid-template-columns: 1fr 0fr;
+    }
+}
