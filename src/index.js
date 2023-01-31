@@ -1,17 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './styles/reset.css';
 import './styles/global.scss';
+
 import App from './views/App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { createStore } from 'redux';
-import rootReducer from './store/reducers/rootReducer';
+import reducer from './store/reducers';
 import reportWebVitals from './reportWebVitals';
-const reduxStore = createStore(
-    rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+
+const reduxStore = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
