@@ -17,7 +17,7 @@ class Login extends React.Component {
     };
     handleLogin = () => {
         let loginbody = {
-            taikhoan: 'Nam',
+            email: 'nam123@gmail.com',
             matkhau: '123',
         };
         this.props.login(loginbody);

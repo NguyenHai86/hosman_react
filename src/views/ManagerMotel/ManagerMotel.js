@@ -16,7 +16,9 @@ class ManagerMotel extends React.Component {
                 <div className="page__sidebar">
                     <SideBar />
                 </div>
-                <div className="page__container">{/* <Switch>{this.mapRouterSidebar()}</Switch> */}</div>
+                <div className="page__container">
+                    <Switch>{this.mapRouterSidebar()}</Switch>
+                </div>
             </div>
         );
     }
