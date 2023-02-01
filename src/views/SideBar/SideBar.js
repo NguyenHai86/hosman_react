@@ -88,7 +88,7 @@ class SideBar extends React.Component {
                     </button>
                 </div>
                 <div className="sidebar__manager">
-                    <i class="fa-regular fa-house"></i>
+                    <i className="fa-regular fa-house"></i>
                     <div className="sidebar__manager__content">
                         <span>Đang quản lý khu</span>
                         <span>195 Nguyễn Văn Quá</span>
