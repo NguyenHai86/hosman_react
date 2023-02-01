@@ -6,9 +6,28 @@ import logoGoogle from './../../assets/images/googleIcon.svg';
 import { PATH } from '../../routers/path';
 import * as actions from './../../store/actions/index';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+import * as emailValidator from 'email-validator';
 class Login extends React.Component {
     state = {
         isShowPass: false,
+        userLogin: { email: '', matkhau: '' },
+    };
+    onChangeEmail = (even) => {
+        this.setState({
+            userLogin: {
+                ...this.state.userLogin,
+                email: even.target.value,
+            },
+        });
+    };
+    onChangePassword = (even) => {
+        this.setState({
+            userLogin: {
+                ...this.state.userLogin,
+                matkhau: even.target.value,
+            },
+        });
     };
     handleShowHidePass = () => {
         this.setState({
@@ -16,11 +35,20 @@ class Login extends React.Component {
         });
     };
     handleLogin = () => {
-        let loginbody = {
-            taikhoan: 'Nam',
-            matkhau: '123',
-        };
-        this.props.login(loginbody);
+        console.log('da vao login');
+        if (this.state.userLogin.email.length === 0 && this.state.userLogin.matkhau.length === 0) {
+            toast.error('Vui lòng nhập email hoặc mật khẩu');
+            return;
+        } else if (!emailValidator.validate(this.state.userLogin.email)) {
+            toast.error('Email không đúng định dạng');
+            return;
+        }
+
+        this.props.login(this.state.userLogin);
+        if (this.props.user) toast.success('Đăng nhập thành công');
+        else {
+            toast.error('Sai tài khoản hoặc mật khẩu');
+        }
     };
 
     render() {
@@ -40,14 +68,24 @@ class Login extends React.Component {
                 <p className="login__spanor">HOẶC</p>
                 <div className="form">
                     <div className="form__inputgroup">
-                        <label htmlFor="username">Tài khoản</label>
-                        <input placeholder="" id="username" />
+                        <label htmlFor="email">Email</label>
+                        <input
+                            placeholder=""
+                            id="email"
+                            value={this.state.userLogin.email}
+                            onChange={(even) => this.onChangeEmail(even)}
+                        />
                     </div>
                     <div className="form__inputgroup ">
                         <label htmlFor="password">Mật khẩu</label>
 
                         <div className="form__inputpassword">
-                            <input type={this.state.isShowPass ? 'text' : 'password'} id="password" />
+                            <input
+                                type={this.state.isShowPass ? 'text' : 'password'}
+                                id="password"
+                                value={this.state.userLogin.matkhau}
+                                onChange={(even) => this.onChangePassword(even)}
+                            />
                             {this.state.isShowPass ? (
                                 <i
                                     className="fa-solid fa-eye-slash form__inputpassword__icon"

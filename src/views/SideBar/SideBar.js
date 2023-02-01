@@ -1,9 +1,10 @@
 import React from 'react';
 import logo from './../../assets/images/hosman_blue.svg';
 import catAvatar from './../../assets/images/catAvatar.jpg';
-import './SideBar.scss';
+// import './SideBar.scss';
 import { NavLink } from 'react-router-dom';
 import { PATH } from '../../routers/path';
+import { connect } from 'react-redux';
 class SideBar extends React.Component {
     showZoneFunction = () => {
         let zoneFunction = [
@@ -77,6 +78,7 @@ class SideBar extends React.Component {
         return result;
     };
     render() {
+        console.log(this.props.user);
         return (
             <div className="sidebar">
                 <div className="sidebar__top">
@@ -88,7 +90,7 @@ class SideBar extends React.Component {
                     </button>
                 </div>
                 <div className="sidebar__manager">
-                    <i class="fa-regular fa-house"></i>
+                    <i className="fa-regular fa-house"></i>
                     <div className="sidebar__manager__content">
                         <span>Đang quản lý khu</span>
                         <span>195 Nguyễn Văn Quá</span>
@@ -108,7 +110,7 @@ class SideBar extends React.Component {
                     </div>
                     <div className="sidebar__user__content">
                         <img src={catAvatar} alt="avatar"></img>
-                        <span>Nguyễn Duy Hải</span>
+                        <span>{this.props.user.tenNguoiDung}</span>
                         <button className="sidebar__button__logout">
                             <i className="fa-solid fa-sign-out-alt"></i>
                         </button>
@@ -118,4 +120,9 @@ class SideBar extends React.Component {
         );
     }
 }
-export default SideBar;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    };
+};
+export default connect(mapStateToProps, null)(SideBar);
