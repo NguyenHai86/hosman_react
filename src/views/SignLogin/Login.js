@@ -10,33 +10,64 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { withFormik } from "formik";
-import * as Yup from "yup";
 import { PATH } from "../../routers/path";
 import * as actions from "../../store/actions";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import * as emailValidator from "email-validator";
 class Login extends React.Component {
   state = {
     isShowPass: false,
+    loginBody: {
+      email: "",
+      matkhau: "",
+    },
+  };
+  handleChangeEmail = (event) => {
+    let cloneLoginBody = { ...this.state.loginBody };
+    cloneLoginBody.email = event.target.value;
+    this.setState({
+      loginBody: cloneLoginBody,
+    });
+  };
+  handleChangePass = (event) => {
+    let cloneLoginBody = { ...this.state.loginBody };
+    cloneLoginBody.matkhau = event.target.value;
+    this.setState({
+      loginBody: cloneLoginBody,
+    });
   };
   handleShowHidePass = () => {
     this.setState({
       isShowPass: !this.state.isShowPass,
     });
   };
-  handleLogin = () => {
-    console.log(this.props.errors);
-    if (this.props.errors == true) {
-      console.log(this.props.errors);
-      toast.error("Đăng nhập không thành công");
+  handleValidation = () => {
+    let loginBody = this.state.loginBody;
+    let errors = [];
+    if (loginBody.email.trim()) {
+      if (!emailValidator.validate(loginBody.email))
+        errors.push("Email không đúng định dạng");
     } else {
-      toast.error("Đã vào login");
-      let loginbody = {
-        email: this.props.values.email,
-        matkhau: this.props.values.password,
-      };
-      if (this.props.login(loginbody)) {
+      errors.push("Email không được để trông");
+    }
+
+    if (loginBody.matkhau.trim()) {
+      if (loginBody.matkhau.length < 8)
+        errors.push("Mật khẩu phải có ít nhất 8 ký tự");
+    } else {
+      errors.push("Mật khẩu không được để trống");
+    }
+
+    return errors.join(". ");
+  };
+  handleLogin = () => {
+    let strError = this.handleValidation();
+    if (strError) {
+      toast.error(strError);
+      return;
+    } else {
+      if (this.props.login(this.state.loginBody)) {
         toast.success("Đăng nhập thành công");
       }
     }
@@ -63,9 +94,8 @@ class Login extends React.Component {
             name="email"
             variant="outlined"
             label="Email"
-            type="email"
-            value={this.props.values.email}
-            onChange={this.props.handleChange}></TextField>
+            value={this.state.loginBody.email}
+            onChange={(event) => this.handleChangeEmail(event)}></TextField>
           <div className="login__inputpass">
             <TextField
               fullWidth
@@ -74,15 +104,8 @@ class Login extends React.Component {
               variant="outlined"
               label="Password"
               type={this.state.isShowPass ? "text" : "password"}
-              value={this.props.values.password}
-              onChange={this.props.handleChange}
-              error={
-                this.props.touched.password &&
-                Boolean(this.props.errors.password)
-              }
-              helperText={
-                this.props.touched.password && this.props.errors.password
-              }
+              value={this.state.loginBody.matkhau}
+              onChange={(event) => this.handleChangePass(event)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -90,9 +113,9 @@ class Login extends React.Component {
                       aria-label="toggle password visibility"
                       onClick={() => this.handleShowHidePass()}>
                       {this.state.isShowPass ? (
-                        <i class="fa-regular fa-eye-slash"></i>
+                        <i className="fa-regular fa-eye-slash"></i>
                       ) : (
-                        <i class="fa-regular fa-eye"></i>
+                        <i className="fa-regular fa-eye"></i>
                       )}
                     </IconButton>
                   </InputAdornment>
@@ -115,25 +138,7 @@ class Login extends React.Component {
     );
   }
 }
-const formik = withFormik({
-  mapPropsToValues() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
-  validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .email("Định dạng email không đúng")
-      .required("Không được để trống"),
-    password: Yup.string()
-      .min(8, "Password phải có ít nhất 8 ký tự")
-      .required("Không được để trống"),
-  }),
-  handleSubmit: (values) => {
-    alert(JSON.stringify(values, null, 2));
-  },
-})(Login);
+
 const mapStateToProps = (state) => {
   return {
     user: state.user,
@@ -146,4 +151,4 @@ const mapDispatchToProps = (dispatch, props) => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(formik);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

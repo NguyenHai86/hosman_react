@@ -33,16 +33,14 @@ class Sign extends React.Component {
         </div>
         <p className="sign__text-or">HOẶC</p>
         <form
-          className="sign__form"
           onSubmit={this.props.handleSubmit}
+          className="sign__form"
           autoComplete="off">
           <TextField
             fullWidth
-            id="email"
             name="email"
             variant="outlined"
             label="Email"
-            type="email"
             value={this.props.values.email}
             onChange={this.props.handleChange}
             error={this.props.touched.email && Boolean(this.props.errors.email)}
@@ -112,9 +110,9 @@ class Sign extends React.Component {
                       aria-label="toggle password visibility"
                       onClick={() => this.handleShowHidePass()}>
                       {this.state.isShowPass ? (
-                        <i class="fa-regular fa-eye-slash"></i>
+                        <i className="fa-regular fa-eye-slash"></i>
                       ) : (
-                        <i class="fa-regular fa-eye"></i>
+                        <i className="fa-regular fa-eye"></i>
                       )}
                     </IconButton>
                   </InputAdornment>
