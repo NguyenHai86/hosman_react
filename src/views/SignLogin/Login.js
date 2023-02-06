@@ -2,12 +2,20 @@ import React from "react";
 import "./Login.scss";
 import logoFacebook from "./../../assets/images/facebookIcon.svg";
 import logoGoogle from "./../../assets/images/googleIcon.svg";
-import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
+import {
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  FormHelperText,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { withFormik } from "formik";
 import * as Yup from "yup";
 import { PATH } from "../../routers/path";
-
+import * as actions from "../../store/actions";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
 class Login extends React.Component {
   state = {
     isShowPass: false,
@@ -16,6 +24,22 @@ class Login extends React.Component {
     this.setState({
       isShowPass: !this.state.isShowPass,
     });
+  };
+  handleLogin = () => {
+    console.log(this.props.errors);
+    if (this.props.errors == true) {
+      console.log(this.props.errors);
+      toast.error("Đăng nhập không thành công");
+    } else {
+      toast.error("Đã vào login");
+      let loginbody = {
+        email: this.props.values.email,
+        matkhau: this.props.values.password,
+      };
+      if (this.props.login(loginbody)) {
+        toast.success("Đăng nhập thành công");
+      }
+    }
   };
   render() {
     return (
@@ -32,7 +56,7 @@ class Login extends React.Component {
           </Button>
         </div>
         <p className="login__text-or">HOẶC</p>
-        <form className="login__form" onSubmit={this.props.handleSubmit}>
+        <form className="login__form">
           <TextField
             fullWidth
             id="email"
@@ -41,12 +65,7 @@ class Login extends React.Component {
             label="Email"
             type="email"
             value={this.props.values.email}
-            onChange={this.props.handleChange}
-            error={this.props.touched.email && Boolean(this.props.errors.email)}
-            helperText={
-              this.props.touched.email && this.props.errors.email
-            }></TextField>
-
+            onChange={this.props.handleChange}></TextField>
           <div className="login__inputpass">
             <TextField
               fullWidth
@@ -65,7 +84,6 @@ class Login extends React.Component {
                 this.props.touched.password && this.props.errors.password
               }
               InputProps={{
-                // <-- This is where the toggle button is added.
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
@@ -81,7 +99,10 @@ class Login extends React.Component {
                 ),
               }}></TextField>
           </div>
-          <Button className="login__submit" variant="contained" type="submit">
+          <Button
+            className="login__submit"
+            variant="contained"
+            onClick={() => this.handleLogin()}>
             ĐĂNG NHẬP
           </Button>
         </form>
@@ -103,7 +124,7 @@ const formik = withFormik({
   },
   validationSchema: Yup.object().shape({
     email: Yup.string()
-      // .email("Định dạng email không đúng")
+      .email("Định dạng email không đúng")
       .required("Không được để trống"),
     password: Yup.string()
       .min(8, "Password phải có ít nhất 8 ký tự")
@@ -113,4 +134,16 @@ const formik = withFormik({
     alert(JSON.stringify(values, null, 2));
   },
 })(Login);
-export default formik;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    login: (loginbody) => {
+      dispatch(actions.actLoginRequest(loginbody));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(formik);

@@ -3,7 +3,8 @@ import "./SignLogin.scss";
 import logo from "./../../assets/images/hosman_blue.svg";
 import { Switch, Route } from "react-router-dom";
 import { routes } from "../../routers/routesSignLogin";
-import Sign from "./Sign";
+import { withRouter } from "react-router";
+import { PATH } from "../../routers/path";
 class SignLogin extends React.Component {
   mapRoutes = () => {
     return routes.map((route, index) => {
@@ -17,6 +18,9 @@ class SignLogin extends React.Component {
       );
     });
   };
+  componentDidMount() {
+    if (window.location.pathname === "/") this.props.history.push(PATH.LOGIN);
+  }
   render() {
     return (
       <div className="sign-login">
@@ -33,4 +37,4 @@ class SignLogin extends React.Component {
     );
   }
 }
-export default SignLogin;
+export default withRouter(SignLogin);
