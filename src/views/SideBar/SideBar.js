@@ -1,12 +1,11 @@
-import React from "react";
 import logo from "./../../assets/images/hosman_blue.svg";
 import catAvatar from "./../../assets/images/catAvatar.jpg";
 import "./SideBar.scss";
 import { NavLink } from "react-router-dom";
 import { PATH } from "../../routers/path";
 import { connect } from "react-redux";
-class SideBar extends React.Component {
-  showZoneFunction = () => {
+export default function SideBar() {
+  const showZoneFunction = () => {
     let zoneFunction = [
       {
         icon: "fa-sharp fa-solid fa-door-open",
@@ -54,7 +53,7 @@ class SideBar extends React.Component {
     });
     return result;
   };
-  showUserFunction = () => {
+  const showUserFunction = () => {
     let userFunction = [
       {
         icon: "fa-solid fa-buildings",
@@ -77,51 +76,43 @@ class SideBar extends React.Component {
     });
     return result;
   };
-  render() {
-    return (
-      <div className="sidebar">
-        <div className="sidebar__top">
-          <div className="sidebar__logo">
-            <img src={logo} alt="logo hosman"></img>
-          </div>
-          <button className="sidebar__hide">
-            <i className="fa-solid fa-circle-arrow-left"></i>
-          </button>
+  return (
+    <div className="sidebar">
+      <div className="sidebar__top">
+        <div className="sidebar__logo">
+          <img src={logo} alt="logo hosman"></img>
         </div>
-        <div className="sidebar__manager">
-          <i className="fa-regular fa-house"></i>
-          <div className="sidebar__manager__content">
-            <span>Đang quản lý khu</span>
-            <span>195 Nguyễn Văn Quá</span>
-          </div>
-        </div>
-        <div className="sidebar__function">
-          <div className="zone-functions">{this.showZoneFunction()}</div>
-          <div className="block-line">
-            <div className="block-line__line"></div>
-          </div>
-          <div className="user-functions">{this.showUserFunction()}</div>
-        </div>
-
-        <div className="sidebar__user">
-          <div className="block-line">
-            <div className="block-line__line"></div>
-          </div>
-          <div className="sidebar__user__content">
-            <img src={catAvatar} alt="avatar"></img>
-            <span>{this.props.user.userLogin.tenNguoiDung}</span>
-            <button className="sidebar__button__logout">
-              <i className="fa-solid fa-sign-out-alt"></i>
-            </button>
-          </div>
+        <button className="sidebar__hide">
+          <i className="fa-solid fa-circle-arrow-left"></i>
+        </button>
+      </div>
+      <div className="sidebar__manager">
+        <i className="fa-regular fa-house"></i>
+        <div className="sidebar__manager__content">
+          <span>Đang quản lý khu</span>
+          <span>195 Nguyễn Văn Quá</span>
         </div>
       </div>
-    );
-  }
+      <div className="sidebar__function">
+        <div className="zone-functions">{showZoneFunction()}</div>
+        <div className="block-line">
+          <div className="block-line__line"></div>
+        </div>
+        <div className="user-functions">{showUserFunction()}</div>
+      </div>
+
+      <div className="sidebar__user">
+        <div className="block-line">
+          <div className="block-line__line"></div>
+        </div>
+        <div className="sidebar__user__content">
+          <img src={catAvatar} alt="avatar"></img>
+          <span>Nguyễn Duy Hải</span>
+          <button className="sidebar__button__logout">
+            <i className="fa-solid fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-export default connect(mapStateToProps, null)(SideBar);

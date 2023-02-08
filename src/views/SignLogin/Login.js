@@ -1,14 +1,7 @@
-import React from "react";
 import "./Login.scss";
 import logoFacebook from "./../../assets/images/facebookIcon.svg";
 import logoGoogle from "./../../assets/images/googleIcon.svg";
-import {
-  TextField,
-  Button,
-  IconButton,
-  InputAdornment,
-  FormHelperText,
-} from "@mui/material";
+import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PATH } from "../../routers/path";
 import * as actions from "../../store/actions";
@@ -50,7 +43,7 @@ export default function Login() {
         </Button>
       </div>
       <p className="login__text-or">HOẶC</p>
-      <form className="login__form">
+      <form className="login__form" onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
           id="email"
@@ -72,6 +65,8 @@ export default function Login() {
             type={isShowPass ? "text" : "password"}
             value={formik.values.password}
             onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -88,7 +83,15 @@ export default function Login() {
               ),
             }}></TextField>
         </div>
+        <Button className="login__submit" variant="contained" type="submit">
+          ĐĂNG NHẬP
+        </Button>
       </form>
+      <div className="login__grouplink">
+        <span>Bạn chưa có tài khoản ?</span>
+        <Link to={PATH.SIGNUP}>Đăng ký</Link>
+        <Link to="#">Quên mật khẩu</Link>
+      </div>
     </div>
   );
 }

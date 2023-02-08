@@ -3,8 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import SideBar from "./../SideBar/SideBar";
 import "./ManagerMotel.scss";
 import { routes } from "../../routers/routeSidebar";
-class ManagerMotel extends React.Component {
-  mapRouterSidebar = () => {
+export default function ManagerMotel() {
+  const mapRouterSidebar = () => {
     return routes.map((route, index) => {
       return (
         <Route
@@ -17,17 +17,14 @@ class ManagerMotel extends React.Component {
     });
   };
 
-  render() {
-    return (
-      <div className="page">
-        <div className="page__sidebar">
-          <SideBar />
-        </div>
-        <div className="page__container">
-          <Switch>{this.mapRouterSidebar()}</Switch>
-        </div>
+  return (
+    <div className="page">
+      <div className="page__sidebar">
+        <SideBar />
       </div>
-    );
-  }
+      <div className="page__container">
+        <Switch>{mapRouterSidebar()}</Switch>
+      </div>
+    </div>
+  );
 }
-export default ManagerMotel;
