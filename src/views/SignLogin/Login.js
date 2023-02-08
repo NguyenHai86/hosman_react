@@ -24,7 +24,7 @@ export default function Login() {
       email: "",
       password: "",
     },
-    validationSchema: Yup.object().shape({
+    validationSchema: Yup.object({
       email: Yup.string()
         .email("Định dạng email không đúng")
         .required("Không được để trống"),
@@ -58,7 +58,10 @@ export default function Login() {
           variant="outlined"
           label="Email"
           value={formik.values.email}
-          onChange={formik.handleChange}></TextField>
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}></TextField>
+
         <div className="login__inputpass">
           <TextField
             fullWidth
@@ -76,9 +79,9 @@ export default function Login() {
                     aria-label="toggle password visibility"
                     onClick={() => setShowPass((prev) => !prev)}>
                     {isShowPass ? (
-                      <i class="fa-regular fa-eye-slash"></i>
+                      <i className="fa-regular fa-eye-slash"></i>
                     ) : (
-                      <i class="fa-regular fa-eye"></i>
+                      <i className="fa-regular fa-eye"></i>
                     )}
                   </IconButton>
                 </InputAdornment>
