@@ -70,7 +70,7 @@ export default function Sign() {
             autoComplete="new-password"
             type={isShowPass ? "text" : "password"}
             value={formik.values.password}
-            onChange={formik.values.handleChange}
+            onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             InputProps={{
@@ -105,7 +105,9 @@ export default function Sign() {
               formik.touched.confirmPassword &&
               Boolean(formik.errors.confirmPassword)
             }
-            helperText={formik.confirmPassword && formik.confirmPassword}
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
             InputProps={{
               // <-- This is where the toggle button is added.
               endAdornment: (

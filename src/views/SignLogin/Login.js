@@ -2,14 +2,14 @@ import "./Login.scss";
 import logoFacebook from "./../../assets/images/facebookIcon.svg";
 import logoGoogle from "./../../assets/images/googleIcon.svg";
 import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import { PATH } from "../../routers/path";
-import * as actions from "../../store/actions";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import * as actions from "../../store/actions";
 export default function Login() {
   const [isShowPass, setShowPass] = useState(false);
   const formik = useFormik({
@@ -26,9 +26,20 @@ export default function Login() {
         .required("Không được để trống"),
     }),
     handleSubmit: (values) => {
+      console.log("vao handle submit");
       alert(JSON.stringify(values, null, 2));
+      handleLogin();
     },
   });
+  const dispatch = useDispatch();
+  const handleLogin = () => {
+    console.log("vao handle login");
+    let loginBody = {
+      email: formik.values.email,
+      matkhau: formik.values.password,
+    };
+    dispatch(actions.actLoginRequest(loginBody));
+  };
   return (
     <div className="login">
       <h1 className="login__title">ĐĂNG NHẬP</h1>
@@ -83,7 +94,11 @@ export default function Login() {
               ),
             }}></TextField>
         </div>
-        <Button className="login__submit" variant="contained" type="submit">
+        <Button
+          className="login__submit"
+          variant="contained"
+          type="submit"
+          onClick={() => handleLogin()}>
           ĐĂNG NHẬP
         </Button>
       </form>
