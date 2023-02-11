@@ -1,12 +1,30 @@
 import actionTypes from "./actionTypes";
 import axiosClient from "../../axiosClient";
 export const actLoginRequest = (loginbody) => {
-  console.log("Vao actLoginRequest");
   return async (dispatch) => {
-    return await axiosClient.post("checkLogin", loginbody).then((res) => {
-      console.log("Vao trong api");
-      dispatch(actSetUserLogin(res.data));
-    });
+    return await axiosClient
+      .post("login", loginbody)
+      .then((res) => {
+        dispatch(actSetUserLogin(res.data));
+        return true;
+      })
+      .catch((err) => {
+        return false;
+      });
+  };
+};
+export const actRefeshLogin = (reseshToken) => {
+  return async (dispatch) => {
+    return await axiosClient
+      .post(`refeshtoken?refeshToken=${reseshToken}`)
+      .then((res) => {
+        console.log(res);
+        dispatch(actSetUserLogin(res.data));
+        return true;
+      })
+      .catch((err) => {
+        return false;
+      });
   };
 };
 const actSetUserLogin = (userLogin) => ({

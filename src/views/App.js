@@ -26,6 +26,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      {/* <ManagerMotel /> */}
       {/* <Routes>
         <Route path="*" element={<NotFoundPage />} />
       </Routes> */}

@@ -7,9 +7,10 @@ import { PATH } from "../../routers/path";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
+import { getRefeshToken, saveRefeshToken } from "../../Util/RefeshToken";
 export default function Login() {
   const [isShowPass, setShowPass] = useState(false);
   const formik = useFormik({
@@ -31,15 +32,26 @@ export default function Login() {
       handleLogin();
     },
   });
+
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const handleLogin = () => {
-    console.log("vao handle login");
     let loginBody = {
       email: formik.values.email,
       matkhau: formik.values.password,
     };
-    dispatch(actions.actLoginRequest(loginBody));
+
+    dispatch(actions.actLoginRequest(loginBody)).then((result) => {
+      if (result) {
+        saveRefeshToken(user.userLogin.refeshToken);
+        formik.resetForm();
+        toast.success("Đăng nhập thành công");
+      }
+    });
   };
+  useEffect(() => {
+    dispatch(actions.actRefeshLogin(refeshToken));
+  }, []);
   return (
     <div className="login">
       <h1 className="login__title">ĐĂNG NHẬP</h1>
