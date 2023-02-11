@@ -40,17 +40,24 @@ export default function Login() {
       email: formik.values.email,
       matkhau: formik.values.password,
     };
-
-    dispatch(actions.actLoginRequest(loginBody)).then((result) => {
-      if (result) {
-        saveRefeshToken(user.userLogin.refeshToken);
-        formik.resetForm();
-        toast.success("Đăng nhập thành công");
-      }
-    });
+    dispatch(actions.actLoginRequest(loginBody))
+      .then((result) => {
+        if (result) {
+          saveRefeshToken(user.userLogin.refeshToken);
+          formik.resetForm();
+          toast.success("Đăng nhập thành công");
+        }
+      })
+      .catch((error) => {
+        toast.error("Đăng nhập không thành công");
+      });
   };
   useEffect(() => {
-    dispatch(actions.actRefeshLogin(refeshToken));
+    dispatch(actions.actRefeshLogin(getRefeshToken())).then((refeshToken) => {
+      if (refeshToken) {
+        saveRefeshToken(refeshToken);
+      }
+    });
   }, []);
   return (
     <div className="login">

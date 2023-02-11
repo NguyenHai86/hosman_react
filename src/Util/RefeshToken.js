@@ -1,10 +1,10 @@
 const key = "refeshToken";
 export const saveRefeshToken = (refeshToken) => {
-  sessionStorage.setItem(key, refeshToken);
+  localStorage.setItem(key, refeshToken);
 };
 export const getRefeshToken = () => {
-  return sessionStorage.getItem(key);
+  return localStorage.getItem(key);
 };
 export const removeRefeshToken = () => {
-  sessionStorage.removeItem(key);
+  localStorage.removeItem(key);
 };

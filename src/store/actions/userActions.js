@@ -2,15 +2,10 @@ import actionTypes from "./actionTypes";
 import axiosClient from "../../axiosClient";
 export const actLoginRequest = (loginbody) => {
   return async (dispatch) => {
-    return await axiosClient
-      .post("login", loginbody)
-      .then((res) => {
-        dispatch(actSetUserLogin(res.data));
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
+    return await axiosClient.post("login", loginbody).then((res) => {
+      dispatch(actSetUserLogin(res.data));
+      return true;
+    });
   };
 };
 export const actRefeshLogin = (reseshToken) => {
@@ -18,9 +13,8 @@ export const actRefeshLogin = (reseshToken) => {
     return await axiosClient
       .post(`refeshtoken?refeshToken=${reseshToken}`)
       .then((res) => {
-        console.log(res);
         dispatch(actSetUserLogin(res.data));
-        return true;
+        return res.data.refeshToken;
       })
       .catch((err) => {
         return false;
