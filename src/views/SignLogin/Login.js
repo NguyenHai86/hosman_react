@@ -2,17 +2,19 @@ import "./Login.scss";
 import logoFacebook from "./../../assets/images/facebookIcon.svg";
 import logoGoogle from "./../../assets/images/googleIcon.svg";
 import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
-import { json, Link } from "react-router-dom";
-import { PATH } from "../../routers/path";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
+import { useNavigate } from "react-router-dom";
 import { getRefeshToken, saveRefeshToken } from "../../Util/RefeshToken";
 export default function Login() {
   const [isShowPass, setShowPass] = useState(false);
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -32,9 +34,8 @@ export default function Login() {
       handleLogin();
     },
   });
-
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+
   const handleLogin = () => {
     let loginBody = {
       email: formik.values.email,
@@ -46,19 +47,21 @@ export default function Login() {
           saveRefeshToken(user.userLogin.refeshToken);
           formik.resetForm();
           toast.success("Đăng nhập thành công");
+          navigate("/quanly");
         }
       })
       .catch((error) => {
         toast.error("Đăng nhập không thành công");
       });
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(actions.actRefeshLogin(getRefeshToken())).then((refeshToken) => {
       if (refeshToken) {
         saveRefeshToken(refeshToken);
+        navigate("/quanly");
       }
     });
-  }, []);
+  });
   return (
     <div className="login">
       <h1 className="login__title">ĐĂNG NHẬP</h1>
@@ -123,7 +126,7 @@ export default function Login() {
       </form>
       <div className="login__grouplink">
         <span>Bạn chưa có tài khoản ?</span>
-        <Link to={PATH.SIGNUP}>Đăng ký</Link>
+        <Link to={"/sign"}>Đăng ký</Link>
         <Link to="#">Quên mật khẩu</Link>
       </div>
     </div>

@@ -2,45 +2,46 @@ import logo from "./../../assets/images/hosman_blue.svg";
 import catAvatar from "./../../assets/images/catAvatar.jpg";
 import "./SideBar.scss";
 import { NavLink } from "react-router-dom";
-import { PATH } from "../../routers/path";
-import { connect } from "react-redux";
-export default function SideBar() {
+import { cloneDeep } from "lodash";
+export default function SideBar(props) {
+  let currentKhuTro = props.currentKhuTro;
+  let userLogin = props.userLogin;
   const showZoneFunction = () => {
     let zoneFunction = [
       {
         icon: "fa-sharp fa-solid fa-door-open",
         name: "Quản lý phòng",
-        link: PATH.QLPHONG,
+        link: "quanlyphong",
       },
       {
         icon: "fa-duotone fa-users",
         name: "Khách thuê",
-        link: PATH.QLKHACHTHUE,
+        link: "quanlykhachthue",
       },
       {
         icon: "fa-solid fa-file-invoice-dollar",
         name: "Tất cả hoá đơn",
-        link: PATH.QLHOADDON,
+        link: "quanlyhoadon",
       },
       {
         icon: "fa-solid fa-cart-shopping",
         name: "Phiếu chi",
-        link: PATH.QLPHIEUCHI,
+        link: "quanlychi",
       },
       {
         icon: "fa-solid fa-calendar",
         name: "Lịch xem phòng",
-        link: PATH.QLLICHXEMPHONG,
+        link: "lichxemphong",
       },
       {
         icon: "fa-solid fa-file-chart-pie",
         name: "Báo cáo khu trọ",
-        link: PATH.BAOCAOKHUTRO,
+        link: "baocaokhutro",
       },
       {
         icon: "fa-solid fa-gear",
         name: "Cài đặt khu trọ",
-        link: PATH.CAIDATKHUTRO,
+        link: "caidatkhutro",
       },
     ];
     let result = zoneFunction.map((value, index) => {
@@ -58,12 +59,12 @@ export default function SideBar() {
       {
         icon: "fa-solid fa-buildings",
         name: "Quản lý khu",
-        link: PATH.QLKHU,
+        link: "quanlykhu",
       },
       {
         icon: "fa-solid fa-file-chart-column",
         name: "Tổng hợp báo cáo",
-        link: PATH.TONGHOPBAOCAO,
+        link: "tonghopbaocao",
       },
     ];
     let result = userFunction.map((value, index) => {
@@ -90,7 +91,7 @@ export default function SideBar() {
         <i className="fa-regular fa-house"></i>
         <div className="sidebar__manager__content">
           <span>Đang quản lý khu</span>
-          <span>195 Nguyễn Văn Quá</span>
+          <span>{currentKhuTro != null ? currentKhuTro.tenKhu : "NULL"} </span>
         </div>
       </div>
       <div className="sidebar__function">
@@ -107,7 +108,7 @@ export default function SideBar() {
         </div>
         <div className="sidebar__user__content">
           <img src={catAvatar} alt="avatar"></img>
-          <span>Nguyễn Duy Hải</span>
+          <span>{userLogin ? userLogin.tenNguoiDung : "NULL"}</span>
           <button className="sidebar__button__logout">
             <i className="fa-solid fa-sign-out-alt"></i>
           </button>

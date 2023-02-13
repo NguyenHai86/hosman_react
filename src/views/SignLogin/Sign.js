@@ -5,7 +5,6 @@ import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { PATH } from "../../routers/path";
 import { useState } from "react";
 export default function Sign() {
   const [isShowPass, setShowPass] = useState(false);
@@ -131,7 +130,7 @@ export default function Sign() {
       </form>
       <div className="sign__grouplink">
         <span>Bạn đã có tài khoản ?</span>
-        <Link to={PATH.LOGIN}>Đăng nhập</Link>
+        <Link to="/">Đăng nhập</Link>
       </div>
     </div>
   );
