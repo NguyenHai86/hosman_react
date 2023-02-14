@@ -2,11 +2,16 @@ import logo from "./../../assets/images/hosman_blue.svg";
 import catAvatar from "./../../assets/images/catAvatar.jpg";
 import "./SideBar.scss";
 import { NavLink } from "react-router-dom";
-import { cloneDeep } from "lodash";
 import { memo } from "react";
+import { removeRefeshToken } from "../../Util/RefeshToken";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as actions from "./../../store/actions";
 function SideBar(props) {
   let currentKhuTro = props.currentKhuTro;
   let userLogin = props.userLogin;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const showZoneFunction = () => {
     let zoneFunction = [
       {
@@ -47,7 +52,14 @@ function SideBar(props) {
     ];
     let result = zoneFunction.map((value, index) => {
       return (
-        <NavLink key={index} className="zone-functions__item" to={value.link}>
+        <NavLink
+          key={index}
+          className={
+            currentKhuTro
+              ? "zone-functions__item"
+              : "zone-functions__item disable"
+          }
+          to={value.link}>
           <i className={value.icon}></i>
           <span>{value.name}</span>
         </NavLink>
@@ -77,6 +89,14 @@ function SideBar(props) {
       );
     });
     return result;
+  };
+  const handleLogout = () => {
+    let isConfirm = window.confirm("Bạn thật sự muốn đăng xuất?");
+    if (isConfirm) {
+      removeRefeshToken();
+      dispatch(actions.actLogout);
+      navigate("/");
+    }
   };
   return (
     <div className="sidebar">
@@ -110,7 +130,7 @@ function SideBar(props) {
         <div className="sidebar__user__content">
           <img src={catAvatar} alt="avatar"></img>
           <span>{userLogin ? userLogin.tenNguoiDung : "NULL"}</span>
-          <button className="sidebar__button__logout">
+          <button className="sidebar__button__logout" onClick={handleLogout}>
             <i className="fa-solid fa-sign-out-alt"></i>
           </button>
         </div>

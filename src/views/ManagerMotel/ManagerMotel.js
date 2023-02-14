@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "./../SideBar/SideBar";
 import { useDispatch } from "react-redux";
 import "./ManagerMotel.scss";
 import * as actions from "./../../store/actions";
-import { cloneDeep, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import { toast } from "react-toastify";
 export default function ManagerMotel() {
   const userLogin = useSelector((state) => state.user.userLogin);
@@ -24,8 +24,12 @@ export default function ManagerMotel() {
   }, []);
   useEffect(() => {
     if (!loading) {
+      console.log(khuTro.length);
       if (khuTro.length > 0) {
         setCurrentKhuTro(khuTro[0]);
+      } else {
+        navigate("quanlykhu");
+        // toast.error("Bạn chưa có khu trọ nào");
       }
     }
   }, [khuTro]);
@@ -36,7 +40,7 @@ export default function ManagerMotel() {
         <SideBar currentKhuTro={currentKhuTro} userLogin={userLogin} />
       </div>
       <div className="page__container">
-        <Outlet />
+        <Outlet context={currentKhuTro} />
       </div>
     </div>
   );
