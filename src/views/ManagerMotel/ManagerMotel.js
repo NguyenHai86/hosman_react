@@ -27,6 +27,7 @@ export default function ManagerMotel() {
       console.log(khuTro.length);
       if (khuTro.length > 0) {
         setCurrentKhuTro(khuTro[0]);
+        navigate("quanlyphong");
       } else {
         navigate("quanlykhu");
         // toast.error("Bạn chưa có khu trọ nào");
