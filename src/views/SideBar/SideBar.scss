@@ -41,7 +41,7 @@
     box-shadow: 0px 1px 10px 0px #c5c5c5;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     cursor: pointer;
     i {
       font-size: 3rem;
@@ -94,7 +94,7 @@
     }
   }
   &__function {
-    max-height: calc(100vh - 26rem);
+    max-height: calc(100vh - 25rem);
     overflow-y: auto;
   }
 }

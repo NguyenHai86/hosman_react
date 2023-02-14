@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./QuanLyPhong.scss";
 import { useOutletContext } from "react-router-dom";
 import {
@@ -9,8 +9,37 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
+import * as actions from "../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
+import { VND } from "../../Util/Format";
 function QuanLyPhong() {
   const [currentKhuTro] = useOutletContext();
+  const [flag, setFlag] = useState(true);
+  const listPhongTro = useSelector((state) => state.phongTro);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!isEmpty(currentKhuTro) && flag === true) {
+      setFlag(false);
+      dispatch(actions.actFetchPhongTroRequest(currentKhuTro.maKhuTro));
+    }
+  });
+  const mapDanhSachPhong = () => {
+    listPhongTro.sort();
+    return listPhongTro.map((phong) => {
+      return (
+        <div key={phong.maPhong} className="list__item">
+          <div className="list__title">
+            <i className="fa-regular fa-house"></i>
+            <span>{phong.tenPhong}</span>
+          </div>
+          <div className="list__buttons"></div>
+          <h3 className="list__name">Nguyễn Duy Hải</h3>
+          <h3 className="list__price">{VND.format(phong.giaThue)}</h3>
+        </div>
+      );
+    });
+  };
   const handleThemPhong = () => {};
   return (
     <div className="quanlyphong">
@@ -40,6 +69,7 @@ function QuanLyPhong() {
             variant="outlined"
             type="text"
             placeholder="Tìm kiếm"
+            size="small"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -57,7 +87,8 @@ function QuanLyPhong() {
           </Button>
         </div>
       </div>
-      <div className="content"></div>
+
+      <div className="list">{mapDanhSachPhong()}</div>
     </div>
   );
 }

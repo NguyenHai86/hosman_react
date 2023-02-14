@@ -24,7 +24,6 @@ export default function ManagerMotel() {
   }, []);
   useEffect(() => {
     if (!loading) {
-      console.log(khuTro.length);
       if (khuTro.length > 0) {
         setCurrentKhuTro(khuTro[0]);
         navigate("quanlyphong");

@@ -4,6 +4,8 @@ const actionTypes = Object.freeze({
   LOGOUT: "LOGOUT",
   FETCH_KHUTRO: "FETCH_KHUTRO",
   FETCH_PHONGTRO: "FETCH_PHONGTRO",
+  FETCH_HOPDONG: "FETCH_HOPDONG",
+  FETCH_PHULUC: "FETCH_PHULUC",
 });
 
 export default actionTypes;
