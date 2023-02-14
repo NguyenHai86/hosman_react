@@ -5,6 +5,7 @@ import NotFoundPage from "./views/NotFoundPage/NotFoundPage";
 import ManagerMotel from "./views/ManagerMotel/ManagerMotel";
 import QuanLyPhong from "./views/QuanLyPhong/QuanLyPhong";
 import { createBrowserRouter } from "react-router-dom";
+import QuanLyKhuTro from "./views/QuanLyKhuTro/QuanLyKhuTro";
 export const router = createBrowserRouter([
   {
     element: <App />,
@@ -25,8 +26,8 @@ export const router = createBrowserRouter([
     element: <ManagerMotel />,
     children: [
       {
-        path: "quanlyphong",
-        element: <QuanLyPhong />,
+        path: "quanlykhu",
+        element: <QuanLyKhuTro />,
       },
     ],
   },

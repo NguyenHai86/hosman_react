@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-
-import { getRefeshToken, saveRefeshToken } from "../../Util/RefeshToken";
+import { saveRefeshToken } from "../../Util/RefeshToken";
 export default function Login() {
   const [isShowPass, setShowPass] = useState(false);
+  const [logging, setLogging] = useState(false);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -39,31 +39,29 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const handleLogin = () => {
-    let loginBody = {
-      email: formik.values.email,
-      matkhau: formik.values.password,
-    };
-    dispatch(actions.actLoginRequest(loginBody))
-      .then((result) => {
-        if (result) {
-          saveRefeshToken(user.userLogin.refeshToken);
-          formik.resetForm();
-          toast.success("Đăng nhập thành công");
-          navigate("/quanly");
-        }
-      })
-      .catch((error) => {
-        toast.error("Đăng nhập không thành công");
-      });
+    if (!logging) {
+      setLogging(true);
+      let loginBody = {
+        email: formik.values.email,
+        matkhau: formik.values.password,
+      };
+      dispatch(actions.actLoginRequest(loginBody))
+        .then((result) => {
+          if (result) {
+            saveRefeshToken(user.userLogin.refeshToken);
+            formik.resetForm();
+            toast.success("Đăng nhập thành công");
+            navigate("/quanly");
+          }
+        })
+        .catch((error) => {
+          toast.error("Đăng nhập không thành công");
+          setLogging(false);
+        });
+    }
+    setLogging(false);
   };
-  useLayoutEffect(() => {
-    dispatch(actions.actRefeshLogin(getRefeshToken())).then((refeshToken) => {
-      if (refeshToken) {
-        saveRefeshToken(refeshToken);
-        navigate("/quanly");
-      }
-    });
-  });
+
   return (
     <div className="login">
       <h1 className="login__title">ĐĂNG NHẬP</h1>
