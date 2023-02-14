@@ -3,7 +3,8 @@ import catAvatar from "./../../assets/images/catAvatar.jpg";
 import "./SideBar.scss";
 import { NavLink } from "react-router-dom";
 import { cloneDeep } from "lodash";
-export default function SideBar(props) {
+import { memo } from "react";
+function SideBar(props) {
   let currentKhuTro = props.currentKhuTro;
   let userLogin = props.userLogin;
   const showZoneFunction = () => {
@@ -26,7 +27,7 @@ export default function SideBar(props) {
       {
         icon: "fa-solid fa-cart-shopping",
         name: "Phiếu chi",
-        link: "quanlychi",
+        link: "quanlyphieuchi",
       },
       {
         icon: "fa-solid fa-calendar",
@@ -117,3 +118,4 @@ export default function SideBar(props) {
     </div>
   );
 }
+export default memo(SideBar);

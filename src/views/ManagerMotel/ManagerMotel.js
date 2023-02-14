@@ -1,27 +1,39 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "./../SideBar/SideBar";
 import { useDispatch } from "react-redux";
 import "./ManagerMotel.scss";
 import * as actions from "./../../store/actions";
+import { cloneDeep, isEmpty } from "lodash";
+import { toast } from "react-toastify";
 export default function ManagerMotel() {
-  const user = useSelector((state) => state.user);
-  const khutro = useSelector((state) => state.khutro);
-  let currenKhuTro = khutro ? khutro[0] : null;
+  const userLogin = useSelector((state) => state.user.userLogin);
+  const khuTro = useSelector((state) => state.khuTro);
+  const [loading, setLoading] = useState(true);
+  let [currentKhuTro, setCurrentKhuTro] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useLayoutEffect(() => {
-    if (!user.userLogin) navigate("/");
-  });
+
   useEffect(() => {
-    if (user.userLogin)
-      dispatch(actions.actFetchKhuTroRequest(user.userLogin.maNguoiDung));
+    setLoading(true);
+    if (isEmpty(userLogin)) navigate(".."); //Chuyen sang trang login
+    else if (userLogin)
+      dispatch(actions.actFetchKhuTroRequest(userLogin.maNguoiDung));
+    setLoading(false);
   }, []);
+  useEffect(() => {
+    if (!loading) {
+      if (khuTro.length > 0) {
+        setCurrentKhuTro(khuTro[0]);
+      }
+    }
+  }, [khuTro]);
+
   return (
     <div className="page">
       <div className="page__sidebar">
-        <SideBar currentKhuTro={currenKhuTro} userLogin={user.userLogin} />
+        <SideBar currentKhuTro={currentKhuTro} userLogin={userLogin} />
       </div>
       <div className="page__container">
         <Outlet />

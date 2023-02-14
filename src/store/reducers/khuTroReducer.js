@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import actionTypes from "../actions/actionTypes";
 // import { cloneDeep } from "lodash";
 
@@ -6,9 +7,9 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_KHUTRO:
       state = action.payload;
-      return [...state];
+      return cloneDeep(state);
     default:
-      return [...state];
+      return cloneDeep(state);
   }
 };
 export default reducer;
