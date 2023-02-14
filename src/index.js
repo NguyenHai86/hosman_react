@@ -13,6 +13,7 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
+import { ToastContainer } from "react-toastify";
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 const reduxStore = createStore(rootReducer, composedEnhancer);
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -21,6 +22,19 @@ root.render(
     <Provider store={reduxStore}>
       <ThemeProvider theme={theme}>
         <RouterProvider router={router} />
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <ToastContainer />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
