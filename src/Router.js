@@ -13,6 +13,7 @@ import LichXemPhong from "./views/LichXemPhong/LichXemPhong";
 import BaoCaoKhuTro from "./views/BaoCaoKhuTro/BaoCaoKhuTro";
 import CaiDatKhuTro from "./views/CaiDatKhuTro/CaiDatKhuTro";
 import TongHopBaoCao from "./views/TongHopBaoCao/TongHopBaoCao";
+import ErrorPage from "./views/ErrorPage/ErrorPage";
 export const router = createBrowserRouter([
   {
     element: <App />,
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
   {
     path: "quanly",
     element: <ManagerMotel />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "quanlyphong",

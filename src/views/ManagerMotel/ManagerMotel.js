@@ -41,7 +41,7 @@ export default function ManagerMotel() {
         <SideBar currentKhuTro={currentKhuTro} userLogin={userLogin} />
       </div>
       <div className="page__container">
-        <Outlet context={currentKhuTro} />
+        <Outlet context={[currentKhuTro]} />
       </div>
     </div>
   );

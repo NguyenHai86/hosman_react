@@ -1,0 +1,65 @@
+.quanlyphong {
+  padding: 0rem 2rem;
+}
+.header {
+  border-left: 0.4rem solid #15a05c;
+
+  padding: 0 1rem;
+
+  height: 8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  h2 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  &__button {
+    margin-left: auto;
+    width: 5rem;
+    height: 5rem;
+    background-color: #15a05c;
+    color: white;
+    font-size: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    &:hover {
+      background-color: darken(#15a05c, 5%);
+    }
+  }
+}
+.bar {
+  height: 7rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 4rem;
+  &__filter--icon {
+    margin-right: 2rem;
+    i {
+      font-size: 3rem;
+      color: #a1a1a1;
+    }
+  }
+  &__search {
+    width: 40rem;
+  }
+  &__export {
+    width: 18rem;
+    margin-left: auto;
+    i {
+      margin-right: 2rem;
+      font-size: 2rem;
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  height: calc(100vh - 21rem);
+  border-radius: 2rem;
+  border: 1px solid #a1a1a1;
+}
