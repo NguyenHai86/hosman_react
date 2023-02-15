@@ -3,6 +3,7 @@ import userReducer from "./userReducer";
 import khuTroReducer from "./khuTroReducer";
 import phongTroReducer from "./phongTroReducer";
 import hopDongReducer from "./hopDongReducer";
+import tienIchReducer from "./tienIchReducer";
 import actionTypes from "../actions/actionTypes";
 
 const appReducer = combineReducers({
@@ -10,6 +11,7 @@ const appReducer = combineReducers({
   khuTro: khuTroReducer,
   phongTro: phongTroReducer,
   hopDong: hopDongReducer,
+  // tienIch: tienIchReducer,
 });
 
 const reducer = (state, action) => {

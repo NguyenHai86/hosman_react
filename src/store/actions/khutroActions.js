@@ -14,3 +14,9 @@ const actFetchKhuTro = (listKhuTro) => ({
   type: actionTypes.FETCH_KHUTRO,
   payload: listKhuTro,
 });
+export const actSetCurrentKhuTro = (currentKhuTro) => {
+  return {
+    type: actionTypes.SET_CURRENT_KHUTRO,
+    payload: currentKhuTro,
+  };
+};

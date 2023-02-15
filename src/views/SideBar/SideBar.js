@@ -2,14 +2,17 @@ import logo from "./../../assets/images/hosman_blue.svg";
 import catAvatar from "./../../assets/images/catAvatar.jpg";
 import "./SideBar.scss";
 import { NavLink } from "react-router-dom";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { removeRefeshToken } from "../../Util/RefeshToken";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as actions from "./../../store/actions";
+import DoiKhuTro from "../DoiKhuTro/DoiKhuTro";
 function SideBar(props) {
-  let currentKhuTro = props.currentKhuTro;
-  let userLogin = props.userLogin;
+  const userLogin = useSelector((state) => state.user.userLogin);
+  const currentKhuTro = useSelector((state) => state.khuTro.currentKhuTro);
+  const [doiKhuTro, setDoiKhuTro] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const showZoneFunction = () => {
@@ -98,44 +101,57 @@ function SideBar(props) {
       navigate("/");
     }
   };
+  const handleDoiKhuTro = () => {
+    console.log("vao doi khu tro");
+    setDoiKhuTro(!doiKhuTro);
+  };
   return (
-    <div className="sidebar">
-      <div className="sidebar__top">
-        <div className="sidebar__logo">
-          <img src={logo} alt="logo hosman"></img>
-        </div>
-        <button className="sidebar__hide">
-          <i className="fa-solid fa-circle-arrow-left"></i>
-        </button>
-      </div>
-      <div className="sidebar__manager">
-        <i className="fa-regular fa-house"></i>
-        <div className="sidebar__manager__content">
-          <span>Đang quản lý khu</span>
-          <span>{currentKhuTro != null ? currentKhuTro.tenKhu : "NULL"} </span>
-        </div>
-      </div>
-      <div className="sidebar__function">
-        <div className="zone-functions">{showZoneFunction()}</div>
-        <div className="block-line">
-          <div className="block-line__line"></div>
-        </div>
-        <div className="user-functions">{showUserFunction()}</div>
-      </div>
-
-      <div className="sidebar__user">
-        <div className="block-line">
-          <div className="block-line__line"></div>
-        </div>
-        <div className="sidebar__user__content">
-          <img src={catAvatar} alt="avatar"></img>
-          <span>{userLogin ? userLogin.tenNguoiDung : "NULL"}</span>
-          <button className="sidebar__button__logout" onClick={handleLogout}>
-            <i className="fa-solid fa-sign-out-alt"></i>
+    <>
+      <div className="sidebar">
+        <div className="sidebar__top">
+          <div className="sidebar__logo">
+            <img src={logo} alt="logo hosman"></img>
+          </div>
+          <button className="sidebar__hide">
+            <i className="fa-solid fa-circle-arrow-left"></i>
           </button>
         </div>
+        <div className="sidebar__manager" onClick={handleDoiKhuTro}>
+          <i className="fa-regular fa-house"></i>
+          <div className="sidebar__manager__content">
+            <span>Đang quản lý khu</span>
+            <span>
+              {currentKhuTro != null ? currentKhuTro.tenKhu : "NULL"}{" "}
+            </span>
+          </div>
+        </div>
+        <div className="sidebar__function">
+          <div className="zone-functions">{showZoneFunction()}</div>
+          <div className="block-line">
+            <div className="block-line__line"></div>
+          </div>
+          <div className="user-functions">{showUserFunction()}</div>
+        </div>
+
+        <div className="sidebar__user">
+          <div className="block-line">
+            <div className="block-line__line"></div>
+          </div>
+          <div className="sidebar__user__content">
+            <img src={catAvatar} alt="avatar"></img>
+            <span>{userLogin ? userLogin.tenNguoiDung : "NULL"}</span>
+            <button className="sidebar__button__logout" onClick={handleLogout}>
+              <i className="fa-solid fa-sign-out-alt"></i>
+            </button>
+          </div>
+        </div>
+        {doiKhuTro ? (
+          <DoiKhuTro setDoiKhuTro={setDoiKhuTro} doiKhuTro={doiKhuTro} />
+        ) : (
+          ""
+        )}
       </div>
-    </div>
+    </>
   );
 }
 export default memo(SideBar);

@@ -21,6 +21,19 @@ export const actRefeshLogin = (reseshToken) => {
       });
   };
 };
+export const actSignUserRequest = (user) => {
+  return async (dispatch) => {
+    return await axiosClient
+      .post("api/nguoidung", user)
+      .then((res) => {
+        return true;
+      })
+      .catch((e) => {
+        return false;
+      });
+  };
+};
+
 const actSetUserLogin = (userLogin) => ({
   type: actionTypes.SET_USERLOGIN,
   payload: userLogin,

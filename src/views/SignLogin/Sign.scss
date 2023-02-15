@@ -1,7 +1,7 @@
 @import "./../../styles/variables";
 .sign {
   width: 70%;
-  height: 60%;
+  height: auto;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -62,4 +62,9 @@
       row-gap: 2rem;
     }
   }
+}
+.flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
 }

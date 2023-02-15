@@ -9,9 +9,9 @@ import { isEmpty } from "lodash";
 import { toast } from "react-toastify";
 export default function ManagerMotel() {
   const userLogin = useSelector((state) => state.user.userLogin);
-  const khuTro = useSelector((state) => state.khuTro);
+  const khuTro = useSelector((state) => state.khuTro.khuTro);
+  const currentKhuTro = useSelector((state) => state.khuTro.currentKhuTro);
   const [loading, setLoading] = useState(true);
-  let [currentKhuTro, setCurrentKhuTro] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,7 +25,9 @@ export default function ManagerMotel() {
   useEffect(() => {
     if (!loading) {
       if (khuTro.length > 0) {
-        setCurrentKhuTro(khuTro[0]);
+        if (isEmpty(currentKhuTro)) {
+          dispatch(actions.actSetCurrentKhuTro(khuTro[0]));
+        }
         navigate("quanlyphong");
       } else {
         navigate("quanlykhu");
@@ -37,10 +39,10 @@ export default function ManagerMotel() {
   return (
     <div className="page">
       <div className="page__sidebar">
-        <SideBar currentKhuTro={currentKhuTro} userLogin={userLogin} />
+        <SideBar />
       </div>
       <div className="page__container">
-        <Outlet context={[currentKhuTro]} />
+        <Outlet />
       </div>
     </div>
   );

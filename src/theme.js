@@ -22,17 +22,5 @@ export const theme = createTheme({
   },
   contrastThreshold: 3,
   tonalOffset: 0.2,
-  components: {
-    MuiTextField: {
-      variants: [
-        {
-          props: { variant: "search" },
-          style: {
-            borderColor: "#C5BEBE",
-            // borderRadius: "1rem",
-          },
-        },
-      ],
-    },
-  },
+  components: {},
 });
