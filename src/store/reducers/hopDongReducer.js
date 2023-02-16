@@ -1,6 +1,5 @@
 import { cloneDeep } from "lodash";
 import actionTypes from "../actions/actionTypes";
-// import { cloneDeep } from "lodash";
 
 const initialState = [];
 const reducer = (state = initialState, action) => {

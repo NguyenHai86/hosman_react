@@ -38,8 +38,13 @@ const actSetUserLogin = (userLogin) => ({
   type: actionTypes.SET_USERLOGIN,
   payload: userLogin,
 });
-export const actLogout = () => {
-  return {
-    type: actionTypes.LOGOUT,
+export const actLogoutRequest = () => {
+  return (dispatch) => {
+    dispatch(actLogout());
   };
 };
+
+const actLogout = () => ({
+  type: actionTypes.LOGOUT,
+  payload: "",
+});

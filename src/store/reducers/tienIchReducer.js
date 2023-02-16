@@ -7,7 +7,7 @@ const reducer = (state = initialState, action) => {
       state.tienich_khutro = action.payload;
       return cloneDeep(state);
     default:
-      cloneDeep(state);
+      return cloneDeep(state);
   }
 };
 export default reducer;

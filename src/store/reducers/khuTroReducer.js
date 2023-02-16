@@ -1,7 +1,6 @@
 import { cloneDeep } from "lodash";
 import actionTypes from "../actions/actionTypes";
 // import { cloneDeep } from "lodash";
-
 const initialState = { khuTro: [], currentKhuTro: {} };
 const reducer = (state = initialState, action) => {
   switch (action.type) {

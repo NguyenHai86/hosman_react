@@ -11,11 +11,12 @@ const appReducer = combineReducers({
   khuTro: khuTroReducer,
   phongTro: phongTroReducer,
   hopDong: hopDongReducer,
-  // tienIch: tienIchReducer,
+  tienIch: tienIchReducer,
 });
 
 const reducer = (state, action) => {
-  if (action.type === actionTypes.LOGOUT) {
+  console.log(action.type);
+  if (action.type == actionTypes.LOGOUT) {
     return appReducer(undefined, action);
   }
   return appReducer(state, action);

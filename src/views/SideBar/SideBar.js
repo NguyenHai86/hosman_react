@@ -3,7 +3,7 @@ import catAvatar from "./../../assets/images/catAvatar.jpg";
 import "./SideBar.scss";
 import { NavLink } from "react-router-dom";
 import { memo, useState } from "react";
-import { removeRefeshToken } from "../../Util/RefeshToken";
+import { getRefeshToken, removeRefeshToken } from "../../Util/RefeshToken";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as actions from "./../../store/actions";
@@ -97,7 +97,8 @@ function SideBar(props) {
     let isConfirm = window.confirm("Bạn thật sự muốn đăng xuất?");
     if (isConfirm) {
       removeRefeshToken();
-      dispatch(actions.actLogout);
+      if (getRefeshToken() != null) removeRefeshToken();
+      dispatch(actions.actLogoutRequest());
       navigate("/");
     }
   };

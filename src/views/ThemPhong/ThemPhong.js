@@ -3,24 +3,28 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  FormGroup,
   Modal,
-  Radio,
   TextField,
   Typography,
 } from "@mui/material";
-import { Field, useFormik } from "formik";
-import { useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ThemPhong.scss";
 import * as actions from "./../../store/actions";
 const styleBox = {
   position: "absolute",
-  top: "30%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  maxHeight: "70vh",
+  maxHeight: "90vh",
   overflowY: "auto",
   bgcolor: "background.paper",
   borderRadius: "1rem",
@@ -35,9 +39,9 @@ export default function ThemPhong(props) {
   const tienIch = useSelector((state) => state.tienIch.tienich_khutro);
   const currentKhuTro = useSelector((state) => state.khuTro.currentKhuTro);
   useEffect(() => {
-    // dispatch(actions.actFetchTienIchKhuTroRequest(currentKhuTro.maKhuTro));
-  }, [currentKhuTro, tienIch]);
-  console.log(tienIch);
+    dispatch(actions.actFetchTienIchKhuTroRequest(currentKhuTro.maKhuTro));
+  }, []);
+
   return (
     <>
       <Modal
@@ -62,13 +66,47 @@ export default function ThemPhong(props) {
             <div className="grid">
               <TextField label="Giá thuê" fullWidth />
               <FormControlLabel
-                control={<Checkbox />}
+                control={<Checkbox defaultCheckek />}
                 label="cho phép thuê"
                 fullWidth
               />
             </div>
             <div className="textfield-ghichu">
               <TextField label="Ghi chú" fullWidth />
+            </div>
+
+            <div className="table">
+              <TableContainer component={Paper}>
+                <Table
+                  sx={{ minWidth: 650 }}
+                  size="small"
+                  aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="right" width={"4rem"}>
+                        Tick
+                      </TableCell>
+                      <TableCell align="right">Tên tiện ích</TableCell>
+                      <TableCell align="right">Ghi chú</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {tienIch.map((row) => (
+                      <TableRow
+                        key={row.maTienIch}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}>
+                        <TableCell align="right" width={"4rem"}>
+                          <Checkbox />
+                        </TableCell>
+                        <TableCell align="right">{row.tenTienIch}</TableCell>
+                        <TableCell align="right">{row.ghiChu}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </div>
           </Typography>
           <Button variant="outlined" fullWidth>
